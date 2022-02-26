@@ -1,3 +1,5 @@
+original: https://github.com/dotnet/Kerberos.NET
+
 # Kerberos.NET
 A complete Kerberos library built entirely in managed code without (many) OS dependencies.
 

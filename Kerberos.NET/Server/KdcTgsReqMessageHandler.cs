@@ -284,7 +284,13 @@ namespace Kerberos.NET.Server
                     this.RealmService.Configuration.Defaults.PermittedEncryptionTypes,
                     this.RealmService.Configuration.Defaults.AllowWeakCrypto
                 ),
+                Compatibility = this.RealmService.Settings.Compatibility,
             };
+
+            if (tgsReq.Body.KdcOptions.HasFlag(KdcOptions.Canonicalize))
+            {
+                rst.SamAccountName = context.GetState<TgsState>(PaDataType.PA_TGS_REQ).DecryptedApReq.Ticket.CName.FullyQualifiedName;
+            }
 
             // this is set here instead of in GenerateServiceTicket because GST is used by unit tests to
             // generate tickets with weird lifetimes for scenario testing and we don't want to break that

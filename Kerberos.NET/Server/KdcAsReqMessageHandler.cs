@@ -183,6 +183,7 @@ namespace Kerberos.NET.Server
                     this.RealmService.Configuration.Defaults.PermittedEncryptionTypes,
                     this.RealmService.Configuration.Defaults.AllowWeakCrypto
                 ),
+                Compatibility = this.RealmService.Settings.Compatibility,
             };
 
             if (context.ClientAuthority != PaDataType.PA_NONE)
@@ -235,6 +236,8 @@ namespace Kerberos.NET.Server
                 SName = KrbPrincipalName.FromPrincipal(context.Principal)
             };
 
+            err.StampServerTime();
+
             return err.EncodeApplication();
         }
 
@@ -253,6 +256,8 @@ namespace Kerberos.NET.Server
                     MethodData = context.PaData.ToArray()
                 }.Encode()
             };
+
+            err.StampServerTime();
 
             return err.EncodeApplication();
         }
